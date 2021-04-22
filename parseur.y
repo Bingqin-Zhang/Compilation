@@ -12,6 +12,10 @@
 %token PT_VIRG
 %start resultat                         /* axiom */
 
+%left '+' '-'
+%left '*' '/'
+%nonassoc MOINSU
+
 %%
 
 resultat: expression ;
@@ -19,20 +23,23 @@ resultat: expression ;
 expression:
     | expression'+'terme
     | expression'-'terme
-    | terme
-    ;
-    
-terme:
-    | terme'*'facteur
-    | facteur
-    ;
-    
-facteur:
-    | '('expression')'
-    | '-'facteur
+    | expression'*'expression
+    | expression'/'expression
+    |'('expression')'
+    |'-'expression %prec MOINSU
     | NOMBRE
-    | facteur';'expression
+    | expression';'expression
     ;
+    
+//terme:
+//    | terme'*'facteur
+//    | facteur
+//    ;
+//    
+//facteur:
+//    |'('expression')'|'-'facteur
+//    | NOMBRE
+//    ;
     
 %%
 
