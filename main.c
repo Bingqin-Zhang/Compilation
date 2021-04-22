@@ -4,10 +4,39 @@
 /* usage: ./main < input.txt */
 #include <stdio.h>                              /* printf */
 #include <stdlib.h>                             /* exit */
+extern FILE  *yyin;
+#define SIZE 256
 
-int main(void){
-    if (yyparse()==0) {                         /* yyparse calls yylex */
-        printf("\nParsing:: syntax OK\n");      /* reached if parsing folllows the grammar */
+//char* read_file(FILE *file);
+
+int main(int argc, char **argv){
+    if(argc<2){
+        if (yyparse()==0) {                         /* yyparse calls yylex */
+            printf("\nParsing:: syntax OK\n");      /* reached if parsing folllows the grammar */
+        }
     }
+    else{
+        FILE *file;
+        if((file = fopen(argv[1],"r")) == NULL){
+            exit(1);
+        }
+        yyin = file;
+        
+        if (yyparse()==0) {                         /* yyparse calls yylex */
+            printf("\nParsing:: syntax OK\n");      /* reached if parsing folllows the grammar */
+        }
+        fclose(file);
+    }
+    
     exit(EXIT_SUCCESS);
 }
+
+/*char* read_file(FILE *file){*/
+/*    if((file = fopen(argv[1],"r")) == NULL){*/
+/*        exit(1);*/
+/*    }*/
+/*    char* read=malloc(sizeof(char)*SIZE);*/
+/*    fread(read,sizeof(char),SIZE,file);*/
+/*    fclose(file);*/
+/*    return read;*/
+/*}*/
