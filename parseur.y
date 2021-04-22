@@ -9,6 +9,7 @@
 %}
 
 %token NOMBRE
+%token PT_VIRG
 %start resultat                         /* axiom */
 
 %%
@@ -27,18 +28,20 @@ terme:
     ;
     
 facteur:
-    |'('expression')'|'-'facteur
+    | '('expression')'
+    | '-'facteur
     | NOMBRE
+    | facteur';'expression
     ;
     
 %%
 
 #include <stdio.h>        /* printf */
 int yyerror(const char *msg){ 
-    printf("Parsing:: syntax error\n"); 
+    printf("Parsing:: syntax error\n");
     return 1;
 }
 
 int yywrap(void){ 
-    return 1; 
+    return 1;
 }/* stop reading flux yyin */
