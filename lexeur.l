@@ -11,7 +11,8 @@
 
 0|[1-9][0-9]*         { printf("lex::NOMBRE %s\n",yytext); return NOMBRE; }
 [\t\n]         { ; }        /* ignore space, tab, and line return */
-;               { printf("lexx::PT_VIRG %s\n", yytext); return yytext[0]; }
+;               { printf("lex::PT_VIRG %s\n", yytext); return yytext[0]; }
+,               { printf("lex::DECIMAL %s\n", yytext); return yytext[0]; }
 .                 { printf("lex::char %s\n",yytext); return yytext[0]; }/* other one-char = token, ex.'+'*/
 
 %%

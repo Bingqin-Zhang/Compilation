@@ -9,6 +9,7 @@
 %}
 
 %token NOMBRE
+%token DECIMAL
 %token PT_VIRG
 %start resultat                         /* axiom */
 
@@ -31,6 +32,7 @@ facteur:
     | '('expression')'
     | '-'facteur
     | NOMBRE
+    | NOMBRE','NOMBRE
     | facteur';'expression
     ;
     
