@@ -11,6 +11,10 @@
 %token NOMBRE
 %start resultat                         /* axiom */
 
+%left '+' '-'
+%left '*' '/'
+%nonassoc MOINSU
+
 %%
 
 resultat: expression ;
@@ -18,18 +22,22 @@ resultat: expression ;
 expression:
     | expression'+'terme
     | expression'-'terme
-    | terme
-    ;
-    
-terme:
-    | terme'*'facteur
-    | facteur
-    ;
-    
-facteur:
-    |'('expression')'|'-'facteur
+    | expression'*'expression
+    | expression'/'expression
+    |'('expression')'
+    |'-'expression %prec MOINSU
     | NOMBRE
     ;
+    
+//terme:
+//    | terme'*'facteur
+//    | facteur
+//    ;
+//    
+//facteur:
+//    |'('expression')'|'-'facteur
+//    | NOMBRE
+//    ;
     
 %%
 
