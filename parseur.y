@@ -22,6 +22,7 @@
 
 %type  <exp> expression
 %token <num> NOMBRE
+%token PT_VIRG
 
 %left '+' '-'
 %left '*' '/'
@@ -40,10 +41,10 @@ expression:
   | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
   | NOMBRE			{ $$ = newLeafAST($1); } 
   ;
+    
 
 %%
 
-#include <stdio.h>	/* printf */
 int yyerror(struct _tree **pT, const char *msg){ printf("Parsing:: syntax error\n"); return 1;}
 int yywrap(void){ return 1; } /* stop reading flux yyin */
 

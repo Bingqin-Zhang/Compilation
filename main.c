@@ -2,14 +2,20 @@
 /* compilation: gcc -o main main.c parseur.tab.c lex.yy.c */
 /* result: main = syntaxic analysis */
 /* usage: ./main < input.txt */
-
-#include <stdio.h>	/* printf */
-#include <stdlib.h>	/* exit */
+#include <stdio.h>                              /* printf */
+#include <stdlib.h>                             /* exit */
+extern FILE  *yyin;
 #include "parseur.tab.h"/* header for TOKEN */
 #include "AST.c"	/* AST fonctions */
 
-int main(void)
+int main(int argc, char **argv){
 {
+  if(argc>1){
+      if((yyin = fopen(argv[1],"r")) == NULL){
+          exit(1);
+      }
+  }
+  
   AST t; 				/* &t allows to modifie the tree */
   if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
     printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
