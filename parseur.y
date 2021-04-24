@@ -35,16 +35,6 @@ expression:
     | NOMBRE                        { $$ = $1; }    /* default semantic value */
     ;
     
-//terme:
-//     terme'*'facteur
-//    | facteur
-//    ;
-//    
-//facteur:
-//    '('expression')'|'-'facteur
-//    | NOMBRE
-//    ;
-    
 %%
 
 
