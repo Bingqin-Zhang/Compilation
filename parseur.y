@@ -22,7 +22,7 @@
 resultat: expression ;
 
 expression:
-    | expression'+'expression
+     expression'+'expression
     | expression'-'expression
     | expression'*'expression
     | expression'/'expression
@@ -34,12 +34,12 @@ expression:
     ;
     
 //terme:
-//    | terme'*'facteur
+//     terme'*'facteur
 //    | facteur
 //    ;
 //    
 //facteur:
-//    |'('expression')'|'-'facteur
+//    '('expression')'|'-'facteur
 //    | NOMBRE
 //    ;
     
