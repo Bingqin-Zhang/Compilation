@@ -41,7 +41,6 @@ expression:
   | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
   | NOMBRE			{ $$ = newLeafAST($1); } 
   ;
-    
 
 %%
 
