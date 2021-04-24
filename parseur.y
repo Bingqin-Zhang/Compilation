@@ -4,6 +4,7 @@
 /* result: parseur.tab.h = def. of lexical units aka lexems */
 
 %{
+    #include <stdio.h>        /* printf */
     int yylex(void);                    /* -Wall : avoid implicit call */
     int yyerror(const char*);           /* same for bison */
 %}
@@ -17,16 +18,16 @@
 
 %%
 
-resultat: expression ;
+resultat: expression { printf("Resultat= %d\n", $1); };
 
 expression:
-    | expression'+'terme
-    | expression'-'terme
-    | expression'*'expression
-    | expression'/'expression
-    |'('expression')'
-    |'-'expression %prec MOINSU
-    | NOMBRE
+    | expression'+'expression            { $$ = $1+$3; }
+    | expression'-'expression            { $$ = $1-$3; }
+    | expression'*'expression       { $$ = $1*$3; }
+    | expression'/'expression       { $$ = $1/$3; }
+    |'('expression')'               { $$ = $2; }
+    |'-'expression %prec MOINSU     { $$ = -$2; }
+    | NOMBRE                        { $$ = $1; }    /* default semantic value */
     ;
     
 //terme:
@@ -41,7 +42,7 @@ expression:
     
 %%
 
-#include <stdio.h>        /* printf */
+
 int yyerror(const char *msg){ 
     printf("Parsing:: syntax error\n"); 
     return 1;
