@@ -21,7 +21,7 @@
 resultat: expression { printf("Resultat= %d\n", $1); };
 
 expression:
-    | expression'+'expression            { $$ = $1+$3; }
+     expression'+'expression            { $$ = $1+$3; }
     | expression'-'expression            { $$ = $1-$3; }
     | expression'*'expression       { $$ = $1*$3; }
     | expression'/'expression       { $$ = $1/$3; }
@@ -31,12 +31,12 @@ expression:
     ;
     
 //terme:
-//    | terme'*'facteur
+//     terme'*'facteur
 //    | facteur
 //    ;
 //    
 //facteur:
-//    |'('expression')'|'-'facteur
+//    '('expression')'|'-'facteur
 //    | NOMBRE
 //    ;
     
