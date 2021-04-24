@@ -18,10 +18,12 @@
 %union {
   struct _tree* exp;
   int num;
+  double dnum;
 } ;
 
 %type  <exp> expression
 %token <num> NOMBRE
+
 %token PT_VIRG
 
 %left '+' '-'
