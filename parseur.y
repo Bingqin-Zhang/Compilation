@@ -21,8 +21,8 @@
 resultat: expression ;
 
 expression:
-    | expression'+'terme
-    | expression'-'terme
+    | expression'+'expression
+    | expression'-'expression
     | expression'*'expression
     | expression'/'expression
     |'('expression')'

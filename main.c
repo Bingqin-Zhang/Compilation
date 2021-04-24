@@ -31,12 +31,4 @@ int main(int argc, char **argv){
     exit(EXIT_SUCCESS);
 }
 
-/*char* read_file(FILE *file){*/
-/*    if((file = fopen(argv[1],"r")) == NULL){*/
-/*        exit(1);*/
-/*    }*/
-/*    char* read=malloc(sizeof(char)*SIZE);*/
-/*    fread(read,sizeof(char),SIZE,file);*/
-/*    fclose(file);*/
-/*    return read;*/
-/*}*/
+
