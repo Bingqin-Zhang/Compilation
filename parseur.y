@@ -9,6 +9,7 @@
 %}
 
 %token NOMBRE
+%token DECIMAL
 %token PT_VIRG
 %start resultat                         /* axiom */
 
@@ -29,6 +30,7 @@ expression:
     |'-'expression %prec MOINSU
     | NOMBRE
     | expression';'expression
+    | NOMBRE','NOMBRE
     ;
     
 //terme:
