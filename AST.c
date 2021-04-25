@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
 #include "AST.h"
 
 /* create an AST from a root value and two AST sons */
@@ -53,5 +54,59 @@ void printAST(AST t)
     printAST(t->right);
     printf("] ");
   }
+}
+
+void PrintElem(AST t, char* file){
+    FILE* fp = fopen(file,"a");
+    if(fp==NULL){
+        perror("Incorrect file or file name !");
+    }
+    
+    if(t->car == '+'){
+        printf("AddiNb\n");
+        char str[] = "AddiNb\n";
+        fwrite(str,sizeof(str),1,fp);
+        fclose(fp);
+    }
+    if(t->car == '-'){
+        if(t->right == NULL){
+            printf("NegaNb\n");
+            char str[] = "NegaNb\n";
+            fwrite(str,sizeof(str),1,fp);
+            fclose(fp);
+        }
+        else{
+            printf("SubiNb\n");
+            char str[] ="SubiNb\n";
+            fwrite(str,sizeof(str),1,fp);
+            fclose(fp);
+        }
+    }
+    if(t->car == '*'){
+        printf("MultNb\n");
+        char str[] ="MultNb\n";
+        fwrite(str,sizeof(str),1,fp);
+        fclose(fp);
+    }
+    if(t->left == NULL && t->right == NULL){
+        printf("CstNb %d\n", t->val);
+        char val[10];
+/*        itoa(t->val, val,10);*/
+        snprintf(val,10,"%d", t->val);
+        char str[] = "CstNb ";
+        strcat(str,val);
+        fwrite(str,sizeof(str),1,fp);
+        fclose(fp);
+    }
+}
+
+void code(AST t, char* file){
+    if(t!=NULL){
+        code(t->left,file);
+        code(t->right,file);
+        
+        PrintElem(t, file);
+        return;
+    }
 }
 

@@ -26,4 +26,8 @@ void freeAST(AST t);
 /* print an AST*/
 void printAST(AST t);
 
+void PrintElem(AST t, char* file);
+
+void code(AST t, char* file);
+
 #endif // !_AST_H_
