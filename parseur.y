@@ -22,7 +22,7 @@
 } ;
 
 %type  <exp> expression
-%token <dnum> NOMBRE
+%token <num> NOMBRE
 %token PT_VIRG
 
 %left '+' '-'

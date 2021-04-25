@@ -4,7 +4,7 @@
 /* unary-and-binary tree structure */
 struct _tree {
   char car;                    	/* char for arithmetic operation */
-  double val;			/* int  for value */
+  int val;			/* int  for value */
   struct _tree* left;    	/* used for unary node but NULL if leaf */
   struct _tree* right;   	/* NULL if unary node or leaf*/
 };
