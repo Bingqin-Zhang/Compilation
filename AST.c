@@ -88,6 +88,12 @@ void PrintElemFile(AST t, char* file){
         fwrite(str,sizeof(str),1,fp);
         fclose(fp);
     }
+    if(t->car == '/'){
+        printf("DiviNb\n");
+        char str[] ="DiviNb\n";
+        fwrite(str,sizeof(str),1,fp);
+        fclose(fp);
+    }
     if(t->left == NULL && t->right == NULL){
         printf("CstNb %d\n", t->val);
         char val[10];
@@ -123,6 +129,9 @@ void PrintElem(AST t){
     }
     if(t->car == '*'){
         printf("MultNb\n");
+    }
+    if(t->car == '/'){
+        printf("DiviNb\n");
     }
     if(t->left == NULL && t->right == NULL){
         printf("CstNb %d\n", t->val);
