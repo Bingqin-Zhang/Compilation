@@ -40,11 +40,9 @@ expression:
   | '(' expression ')'		{ $$ = $2; }
   | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
   | NOMBRE			{ $$ = newLeafAST($1); }
-  ;
-    
+  ;    
 
 %%
 
 int yyerror(struct _tree **pT, const char *msg){ printf("Parsing:: syntax error\n"); return 1;}
 int yywrap(void){ return 1; } /* stop reading flux yyin */
-
