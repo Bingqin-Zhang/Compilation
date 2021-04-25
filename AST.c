@@ -56,7 +56,7 @@ void printAST(AST t)
   }
 }
 
-void PrintElem(AST t, char* file){
+void PrintElemFile(AST t, char* file){
     FILE* fp = fopen(file,"a");
     if(fp==NULL){
         perror("Incorrect file or file name !");
@@ -91,7 +91,6 @@ void PrintElem(AST t, char* file){
     if(t->left == NULL && t->right == NULL){
         printf("CstNb %d\n", t->val);
         char val[10];
-/*        itoa(t->val, val,10);*/
         snprintf(val,10,"%d", t->val);
         char str[] = "CstNb ";
         strcat(str,val);
@@ -100,12 +99,42 @@ void PrintElem(AST t, char* file){
     }
 }
 
-void code(AST t, char* file){
+void codeFile(AST t, char* file){
     if(t!=NULL){
-        code(t->left,file);
-        code(t->right,file);
+        codeFile(t->left,file);
+        codeFile(t->right,file);
         
-        PrintElem(t, file);
+        PrintElemFile(t, file);
+        return;
+    }
+}
+
+void PrintElem(AST t){
+    if(t->car == '+'){
+        printf("AddiNb\n");
+    }
+    if(t->car == '-'){
+        if(t->right == NULL){
+            printf("NegaNb\n");
+        }
+        else{
+            printf("SubiNb\n");
+        }
+    }
+    if(t->car == '*'){
+        printf("MultNb\n");
+    }
+    if(t->left == NULL && t->right == NULL){
+        printf("CstNb %d\n", t->val);
+    }
+}
+
+void code(AST t){
+    if(t!=NULL){
+        code(t->left);
+        code(t->right);
+        
+        PrintElem(t);
         return;
     }
 }

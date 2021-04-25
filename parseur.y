@@ -39,7 +39,7 @@ expression:
   | expression '/' expression	{ $$ = newBinaryAST('/',$1,$3); }
   | '(' expression ')'		{ $$ = $2; }
   | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
-  | NOMBRE			{ $$ = newLeafAST($1); } 
+  | NOMBRE			{ $$ = newLeafAST($1); }
   ;
     
 

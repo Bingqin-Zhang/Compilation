@@ -28,7 +28,20 @@ int main(int argc, char **argv){
         /* print the obtained tree */
         if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
         printAST(t); printf("\n");
-        code(t,file);
+        codeFile(t,file);
+        		
+        freeAST(t);
+      }
+  }
+  else{
+    AST t; 				/* &t allows to modifie the tree */
+      if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
+        printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
+        
+        /* print the obtained tree */
+        if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
+        printAST(t); printf("\n");
+        code(t);
         		
         freeAST(t);
       }
