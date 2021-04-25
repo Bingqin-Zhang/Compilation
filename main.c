@@ -8,7 +8,7 @@ extern FILE  *yyin;
 #include "parseur.tab.h"/* header for TOKEN */
 #include "AST.c"	/* AST fonctions */
 
-int main(int argc, char **argv){
+int main(int argc, char **argv)
 {
   if(argc>1){
       if((yyin = fopen(argv[1],"r")) == NULL){
