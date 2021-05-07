@@ -28,12 +28,14 @@
 %left '*' '/'
 %nonassoc MOINSU
 
+
 %%
 
 resultat:   expression		{ *pT = $1; }
 
 expression: 
-    expression '+' expression	{ $$ = newBinaryAST('+',$1,$3); }
+    NOMBRE'.'NOMBRE             { $$ = newBinaryAST($1,'.',$3); }
+  | expression '+' expression	{ $$ = newBinaryAST('+',$1,$3); }
   | expression '-' expression	{ $$ = newBinaryAST('-',$1,$3); }
   | expression '*' expression	{ $$ = newBinaryAST('*',$1,$3); }
   | expression '/' expression	{ $$ = newBinaryAST('/',$1,$3); }
