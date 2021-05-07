@@ -2,12 +2,14 @@
 /* compilation: gcc -o main main.c parseur.tab.c lex.yy.c */
 /* result: main = syntaxic analysis */
 /* usage: ./main < input.txt */
+
 #include <string.h>
-#include <stdio.h>                              /* printf */
-#include <stdlib.h>                             /* exit */
-extern FILE  *yyin;
+#include <stdio.h>	/* printf */
+#include <stdlib.h>	/* exit */
 #include "parseur.tab.h"/* header for TOKEN */
 #include "AST.c"	/* AST fonctions */
+
+extern FILE  *yyin;
 
 char* extract_name(char* c);
 
@@ -21,34 +23,22 @@ int main(int argc, char **argv){
       char aux[3] = "jsm";
       strcat(file,aux);
       
-      AST t; 				/* &t allows to modifie the tree */
-      if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
+      AST t;        /* &t allows to modifie the tree */
+      if ((yyparse(&t)==0)) {     /* yyparse calls yylex */
         printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
-        
         /* print the obtained tree */
-        if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
-        printAST(t); printf("\n");
+        if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);  /* check if car at root */
+        printAST(t); 
+        printf("\n");
         codeFile(t,file);
-        		
-        freeAST(t);
-      }
-  }
-  else{
-    AST t; 				/* &t allows to modifie the tree */
-      if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
-        printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
-        
-        /* print the obtained tree */
-        if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
-        printAST(t); printf("\n");
-        code(t);
-        		
+        printf("Halt\n");
         freeAST(t);
       }
   }
   
   exit(EXIT_SUCCESS);
 }
+
 
 char* extract_name(char* c){
     int n = 0;
@@ -65,4 +55,3 @@ char* extract_name(char* c){
     
     return rst;
 }
-

@@ -1,4 +1,5 @@
-# Compilation TP1
+# Compilation TP1 et projet
+
 
 Authors :
 Lili JIN 11513817

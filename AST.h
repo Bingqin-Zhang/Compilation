@@ -5,6 +5,7 @@
 struct _tree {
   char car;                    	/* char for arithmetic operation */
   int val;			/* int  for value */
+  char* nom;
   struct _tree* left;    	/* used for unary node but NULL if leaf */
   struct _tree* right;   	/* NULL if unary node or leaf*/
 };
@@ -20,13 +21,17 @@ AST newUnaryAST(char car, AST son);
 /* create an AST leaf from a value */
 AST newLeafAST(int val);
 
+AST newLeafValAST(char car,char* nom);
+
+AST newLeafNomAST(char* nom);
+
 /* delete an AST */
 void freeAST(AST t);
 
 /* print an AST*/
 void printAST(AST t);
 
-void PrintElemFile(AST t, char* file);
+void PrintElemFile(AST t, FILE* file);
 
 void codeFile(AST t, char* file);
 
