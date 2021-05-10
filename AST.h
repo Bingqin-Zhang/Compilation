@@ -31,7 +31,9 @@ void freeAST(AST t);
 /* print an AST*/
 void printAST(AST t);
 
-void PrintElemFile(AST t, FILE* file);
+void test(int IsElse);
+
+void PrintElemFile(AST t, FILE* fp);
 
 void codeFile(AST t, char* file);
 

@@ -3,6 +3,15 @@
 #include <string.h>
 #include "AST.h"
 
+#define TAILLE 1000         // On accepte jusqu'a 1000 lignes d'expressions 
+
+int count_if;
+int count_else;
+int IsElse;
+char** preProg;
+int preProgLen=0;
+
+
 /* create an AST from a root value and two AST sons */
 AST newBinaryAST(char car, AST left, AST right)
 {
@@ -83,6 +92,16 @@ void printAST(AST t)
   }
 }
 
+
+void test(int IsElse){
+    if(IsElse==1){
+        count_if++;
+    }
+    if(IsElse==2){
+        count_else++;
+    }
+}
+
 void PrintElemFile(AST t, FILE* fp){
     if (t->car=='a'){
         // Si c'est une variable
@@ -90,70 +109,80 @@ void PrintElemFile(AST t, FILE* fp){
             printf("CstNb 1\n");
             char str[] = "CstNb 1";
             fprintf(fp,"%s\n",str);
-            fclose(fp);
+            test(IsElse);
             
             printf("AddiNb\n");
             char str1[] = "AddiNb";
             fprintf(fp,"%s\n",str1);
+            test(IsElse);
             fclose(fp);
         }
         else{
             printf("CstNb 1 \n");
             char str[] = "CstNb 1";
             fprintf(fp,"%s\n",str);
-            fclose(fp);
+            test(IsElse);
             
             printf("AddiNb\n");
             char str1[] = "AddiNb";
             fprintf(fp,"%s\n",str1);
-            fclose(fp);
+            test(IsElse);
             
             printf("SetVar %s\n",t->left->nom);
             char str2[] = "SetVar";
-            fprintf(fp,"%s\n",str2);
+            fprintf(fp,"%s %s\n",str2, t->left->nom);
+            test(IsElse);
             fclose(fp);
         }
+        return;
     }
     if (t->car == 'L'){
         printf("LoEqNb\n");
         char str[] = "LoEqNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if (t->car == 'G'){
         printf("GrEqNb\n");
         char str[] = "GrEqNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if (t->car == 'l'){
         printf("LoStNb\n");
         char str[] = "LoStNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if (t->car == 'g'){
         printf("GrStNb\n");
         char str[] = "GrStNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if (t->car == 'E'){
         printf("Equals\n");
         char str[] = "Equals";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if (t->car == 'N'){
         printf("NotEquals\n");
         char str[] = "NotEquals";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }    
     if(t->car == '+'){
         printf("AddiNb\n");
         char str[] = "AddiNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if(t->car == '-'){
@@ -161,60 +190,96 @@ void PrintElemFile(AST t, FILE* fp){
             printf("NegaNb");
             char str[] = "NegaNb";
             fprintf(fp,"%s\n",str);
+            test(IsElse);
             fclose(fp);
         }
         else{
             printf("SubiNb\n");
             char str[] ="SubiNb";
             fprintf(fp,"%s\n",str);
+            test(IsElse);
             fclose(fp);
         }
+        return;
     }
     if(t->car == '*'){
         printf("MultNb\n");
         char str[] ="MultNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if(t->car == '/'){
         printf("DiviNb\n");
         char str[] ="DiviNb";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if (t->car == 'n'){
         printf("Not\n");
         char str[] ="Not";
         fprintf(fp,"%s\n",str);
+        test(IsElse);
         fclose(fp);
     }
     if(t->car=='v'){
         printf("CstNb %s\n", t->nom);
         char str[] = "CstNb";
         fprintf(fp,"%s %s\n",str,t->nom);
+        test(IsElse);
         fclose(fp);
         return;
     }
-    if (t->nom!=NULL && t->car !='v'){
+    if(t->nom!=NULL && t->car !='v'){
         printf("GetVar %s\n",t->nom);
         char str[] ="GetVar";
-        fprintf(fp,"%s\n",str);
+        fprintf(fp,"%s %s\n",str,t->nom);
+        test(IsElse);
         fclose(fp);
     }
-
 }
 
 void codeFile(AST t, char* file){
-    FILE* fp = fopen(file,"a+");
+    FILE* fp;
+    fp = fopen(file,"a");
     if(fp==NULL){
         perror("Incorrect file or file name !");
     }
-    if(t!=NULL){         
+    
+    if(t!=NULL){
+        if(t->car=='f'){
+            
+            codeFile(t->left, file);
+            printf("ConJmp\n");
+            char str[] = "ConJmp";
+            fprintf(fp,"%s\n",str);
+            fclose(fp);
+            
+            IsElse=1;
+            codeFile(t->right->left, file);
+            
+            codeFile(t->right,file);    
+                
+            IsElse=2;
+            codeFile(t->right->right,file);
+            
+            return;
+        }
+        if(t->car=='e'){
+            printf("Jump\n");
+            char str1[] = "Jump";
+            fprintf(fp,"%s\n",str1);
+            test(IsElse);
+            fclose(fp);
+            return;
+        }         
     	if(t->car=='='){
     		codeFile(t->right,file);
     		printf("SetVar %s\n", t->left->nom);
     		char str[] ="SetVar";
-            fprintf(fp,"%s\n",str);
+            fprintf(fp,"%s %s\n",str, t->left->nom);
+            test(IsElse);
             fclose(fp);
             return;
     	}
@@ -236,7 +301,9 @@ void codeFile(AST t, char* file){
         if(t->car=='b'){
             printf("CstBo %s\n", t->left->nom);
             char str[] ="CstBo";
-            fprintf(fp,"%s\n",str);
+            fprintf(fp,"%s %s\n",str, t->left->nom);
+            test(IsElse);
+
             fclose(fp);
         } 
 
@@ -244,8 +311,6 @@ void codeFile(AST t, char* file){
     }
 
 }
-
-
 
 
 
