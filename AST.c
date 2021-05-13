@@ -187,7 +187,7 @@ void PrintElemFile(AST t, FILE* fp){
     }
     if(t->car == '-'){
         if(t->right == NULL){
-            printf("NegaNb");
+            printf("NegaNb\n");
             char str[] = "NegaNb";
             fprintf(fp,"%s\n",str);
             test(IsElse);
