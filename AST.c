@@ -8,8 +8,6 @@
 int count_if;
 int count_else;
 int IsElse;
-char** preProg;
-int preProgLen=0;
 
 
 /* create an AST from a root value and two AST sons */
