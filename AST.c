@@ -3,8 +3,6 @@
 #include <string.h>
 #include "AST.h"
 
-#define TAILLE 1000         // On accepte jusqu'a 1000 lignes d'expressions 
-
 int count_if;
 int count_else;
 int IsElse;
